@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airport List</title>
+</head>
+<body>
+    <h1>Airport List</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>ICAO</th>
+                <th>IATA</th>
+                <th>Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for airport in airports %}
+                <tr>
+                    <td>{{ airport.id }}</td>
+                    <td>{{ airport.name }}</td>
+                    <td>{{ airport.icao }}</td>
+                    <td>{{ airport.iata }}</td>
+                    <td>{{ airport.country }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

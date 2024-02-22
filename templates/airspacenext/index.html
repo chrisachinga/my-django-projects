@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Airspace App</title>
+</head>
+<body>
+    <h1>Welcome to Airspace App</h1>
+
+    <p>There are {{ airport_count }} airports and {{ airline_count }} airlines in the database.</p>
+
+    <h2>Random 10 Airports:</h2>
+    <ul>
+        {% for airport in airports %}
+            <li>{{ airport.name }} ({{ airport.icao }})</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Random 10 Airlines:</h2>
+    <ul>
+        {% for airline in airlines %}
+            <li>{{ airline.name }} ({{ airline.icao }})</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Add any additional content or styling as needed -->
+
+</body>
+</html>

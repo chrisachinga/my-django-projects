@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airports Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Airports Map</h1>
+
+    <input type="text" id="searchInput" placeholder="Search for airports">
+
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([0, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var airports = {% autoescape off %}{{ airports|safe }}{% endautoescape %};
+
+        airports.forEach(function(airport) {
+            var marker = L.marker([airport.latitude, airport.longitude]).addTo(map);
+            marker.bindPopup('<b>' + airport.name + '</b><br>' + airport.icao);
+            airport.marker = marker;  // Add marker to airport object for later reference
+        });
+
+        // Add search functionality
+        var input = document.getElementById('searchInput');
+        input.addEventListener('input', function() {
+            var query = input.value.toLowerCase();
+
+            airports.forEach(function(airport) {
+                var marker = airport.marker;
+                if (marker) {
+                    if (airport.name.toLowerCase().includes(query) || airport.icao.toLowerCase().includes(query)) {
+                        marker.addTo(map);
+                    } else {
+                        map.removeLayer(marker);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
